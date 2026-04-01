@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  web:
+    image: nginx:alpine
+    ports:
+      - "8080:80"
+    volumes:
+      - ./site:/usr/share/nginx/html
+    depends_on:
+      - api
+
+  api:
+    build: ../mon-api
+    ports:
+      - "5000:5000"
+
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: devops
+      POSTGRES_PASSWORD: secret123
+      POSTGRES_DB: webapp
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+volumes:
+  db-data:
