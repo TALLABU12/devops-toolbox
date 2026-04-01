@@ -1,0 +1,10 @@
+test_avec_rapport:
+  stage: test
+  image: python:3.11-slim
+  script:
+    - python test_app.py > rapport-tests.txt 2>&1
+    - echo "Tests exécutés le $(date)" >> rapport-tests.txt
+  artifacts:
+    paths:
+      - rapport-tests.txt
+    expire_in: 1 week
